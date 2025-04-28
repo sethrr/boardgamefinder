@@ -1,7 +1,7 @@
 # How to Start
 
 ```bash
-npm install 
+npm install
 npm run dev
 ```
 

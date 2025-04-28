@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .main {
+        @apply bg-gradient-to-b min-h-screen flex items-center justify-center from-gray-700 to-gray-900;
+    }
+
+    .btn {
+        @apply py-1.5 lg:py-2 text-lg text-gray-100 rounded px-8 hover:opacity-90 bg-teal-700 font-semibold mt-5 w-full disabled:opacity-50;
+    }
+
+    .result {
+        @apply -mt-8 whitespace-pre-line text-gray-200;
+    }
+}
+
+.main {
+    flex-direction: column;
+    gap: 4rem;
+    justify-content: flex-start;
+    padding-top: 2rem;
+}
+.intro-container {
+    color: white;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+
+    button {
+        color: black;
+        text-transform: uppercase;
+        max-width: 50%;
+        margin-top: 2rem;
+    }
+}
+.textarea {
+
+    height: 100%;
+    width: 100%;
+    border-radius: 0.25rem;
+    background-color: transparent;
+    padding: 0.75rem;
+    color: rgb(255 255 255);
+}
+.logo {
+    max-width: 250px;
+}
+
+.textarea-container {
+    flex: 1; /* Takes remaining space */
+    display: flex;
+    margin-bottom: 10px;
+
+  }
+  
+  .textarea {
+    flex: 1;
+    min-height: 100px; 
+    resize: none;
+  }
