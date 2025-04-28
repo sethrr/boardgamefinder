@@ -184,7 +184,6 @@ function GameFinder() {
     const currentQuestion = questions[currentQuestionIndex];
     const isLastQuestion = currentQuestionIndex === questions.length - 1;
     const currentAnswer = answerValues[currentQuestion.id];
-  const allQuestionsAnswered = playerCount && timeLength && complexity;
 
 
   return (
