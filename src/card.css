@@ -56,7 +56,7 @@ h3 {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .question-slide h2 {
