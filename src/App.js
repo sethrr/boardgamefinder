@@ -15,11 +15,13 @@ function App() {
         <img src="/GameFinderLogo.png" alt="EavBoardGameFinder"></img>
       </div>
       {!activeFinder ? (
+        <div className="finder-container">
         <div className="question-slide">
         <div className="intro-container">
           <h1> Looking for a game? We can help.</h1>
           <p> Fill out a few questions and we will recommend a game for you to play. </p>
           <button className="nav-button next-button" onClick={handleToggle}>Let's Go!</button>
+        </div>
         </div>
         </div>
       ) : (

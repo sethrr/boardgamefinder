@@ -188,7 +188,7 @@ function GameFinder() {
 
   return (
  
-      <div className="questionnaire-container">
+      <div className="finder-container">
         {!isSubmitted ? (
           <>
             <div className="question-slide">

@@ -18,7 +18,7 @@
 
 .main {
     flex-direction: column;
-    gap: 4rem;
+    gap: 2rem;
     justify-content: flex-start;
     padding-top: 2rem;
 }
@@ -61,6 +61,6 @@
   
   .textarea {
     flex: 1;
-    min-height: 100px; 
+    min-height: 300px; 
     resize: none;
   }
