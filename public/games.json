@@ -438,5 +438,605 @@
     "playingtime": 40,
     "maxplaytime": 40,
     "minplaytime": 30
+  },
+   {
+    "objectname": "Azul",
+    "average": null,
+    "avgweight": 1.7703,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Battlestar Galactica: The Board Game",
+    "average": null,
+    "avgweight": 3.2513,
+    "minplayers": 3,
+    "maxplayers": 6,
+    "playingtime": 180,
+    "maxplaytime": 180,
+    "minplaytime": 120
+  },
+  {
+    "objectname": "Betrayal at House on the Hill",
+    "average": null,
+    "avgweight": 2.3976,
+    "minplayers": 3,
+    "maxplayers": 6,
+    "playingtime": 60,
+    "maxplaytime": 60,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Brink",
+    "average": null,
+    "avgweight": 3.25,
+    "minplayers": 2,
+    "maxplayers": 5,
+    "playingtime": 150,
+    "maxplaytime": 150,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Camel Up (Second Edition)",
+    "average": null,
+    "avgweight": 1.5046,
+    "minplayers": 3,
+    "maxplayers": 8,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Captain Sonar",
+    "average": null,
+    "avgweight": 2.2049,
+    "minplayers": 2,
+    "maxplayers": 8,
+    "playingtime": 60,
+    "maxplaytime": 60,
+    "minplaytime": 45
+  },
+  {
+    "objectname": "Cascadia",
+    "average": null,
+    "avgweight": 1.8515,
+    "minplayers": 1,
+    "maxplayers": 4,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Cat in the Box: Deluxe Edition",
+    "average": null,
+    "avgweight": 2.0452,
+    "minplayers": 2,
+    "maxplayers": 5,
+    "playingtime": 40,
+    "maxplaytime": 40,
+    "minplaytime": 20
+  },
+  {
+    "objectname": "CATAN",
+    "average": null,
+    "avgweight": 2.287,
+    "minplayers": 3,
+    "maxplayers": 4,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "CATAN: 3D Edition",
+    "average": null,
+    "avgweight": 1.8,
+    "minplayers": 3,
+    "maxplayers": 4,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "CATAN: Seafarers",
+    "average": null,
+    "avgweight": 2.3751,
+    "minplayers": 3,
+    "maxplayers": 4,
+    "playingtime": 90,
+    "maxplaytime": 90,
+    "minplaytime": 90
+  },
+  {
+    "objectname": "Cheese Thief",
+    "average": null,
+    "avgweight": 1.1538,
+    "minplayers": 4,
+    "maxplayers": 8,
+    "playingtime": 15,
+    "maxplaytime": 15,
+    "minplaytime": 10
+  },
+  {
+    "objectname": "Civilization: A New Dawn",
+    "average": null,
+    "avgweight": 3.1767,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Clue",
+    "average": null,
+    "avgweight": 1.6442,
+    "minplayers": 2,
+    "maxplayers": 6,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 45
+  },
+  {
+    "objectname": "Codenames",
+    "average": null,
+    "avgweight": 1.2577,
+    "minplayers": 2,
+    "maxplayers": 8,
+    "playingtime": 15,
+    "maxplaytime": 15,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "Coffee Rush",
+    "average": null,
+    "avgweight": 1.8172,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 30,
+    "maxplaytime": 30,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Coup",
+    "average": null,
+    "avgweight": 1.4112,
+    "minplayers": 2,
+    "maxplayers": 6,
+    "playingtime": 15,
+    "maxplaytime": 15,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "Cranium",
+    "average": null,
+    "avgweight": 1.4156,
+    "minplayers": 4,
+    "maxplayers": 99,
+    "playingtime": 60,
+    "maxplaytime": 60,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "The Crew: The Quest for Planet Nine",
+    "average": null,
+    "avgweight": 1.9545,
+    "minplayers": 2,
+    "maxplayers": 5,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 20
+  },
+  {
+    "objectname": "Dead of Winter: A Crossroads Game",
+    "average": null,
+    "avgweight": 3.0122,
+    "minplayers": 2,
+    "maxplayers": 5,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Deception: Murder in Hong Kong",
+    "average": null,
+    "avgweight": 1.5779,
+    "minplayers": 4,
+    "maxplayers": 12,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 20
+  },
+  {
+    "objectname": "Diplomacy",
+    "average": null,
+    "avgweight": 3.3278,
+    "minplayers": 2,
+    "maxplayers": 7,
+    "playingtime": 360,
+    "maxplaytime": 360,
+    "minplaytime": 360
+  },
+  {
+    "objectname": "Everdell",
+    "average": null,
+    "avgweight": 2.8243,
+    "minplayers": 1,
+    "maxplayers": 4,
+    "playingtime": 80,
+    "maxplaytime": 80,
+    "minplaytime": 40
+  },
+  {
+    "objectname": "Farms Race: Deluxe Edition",
+    "average": null,
+    "avgweight": 1.6667,
+    "minplayers": 2,
+    "maxplayers": 5,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Fire Tower",
+    "average": null,
+    "avgweight": 1.7593,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 30,
+    "maxplaytime": 30,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "The Game of Life",
+    "average": null,
+    "avgweight": 1.1697,
+    "minplayers": 2,
+    "maxplayers": 6,
+    "playingtime": 60,
+    "maxplaytime": 60,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Gloomhaven: Jaws of the Lion",
+    "average": null,
+    "avgweight": 3.6374,
+    "minplayers": 1,
+    "maxplayers": 4,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Hand-to-Hand Wombat",
+    "average": null,
+    "avgweight": 1.1579,
+    "minplayers": 3,
+    "maxplayers": 6,
+    "playingtime": 15,
+    "maxplaytime": 15,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "Harmonies",
+    "average": null,
+    "avgweight": 1.998,
+    "minplayers": 1,
+    "maxplayers": 4,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Hive",
+    "average": null,
+    "avgweight": 2.3149,
+    "minplayers": 2,
+    "maxplayers": 2,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 20
+  },
+  {
+    "objectname": "Mind MGMT: The Psychic Espionage “Game.”",
+    "average": null,
+    "avgweight": 2.9254,
+    "minplayers": 1,
+    "maxplayers": 5,
+    "playingtime": 60,
+    "maxplaytime": 60,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Mission Control: Critical Orbit",
+    "average": null,
+    "avgweight": 2,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "Monopoly",
+    "average": null,
+    "avgweight": 1.6242,
+    "minplayers": 2,
+    "maxplayers": 8,
+    "playingtime": 180,
+    "maxplaytime": 180,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Moonrakers",
+    "average": null,
+    "avgweight": 2.4615,
+    "minplayers": 1,
+    "maxplayers": 5,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Mysterium",
+    "average": null,
+    "avgweight": 1.8935,
+    "minplayers": 2,
+    "maxplayers": 7,
+    "playingtime": 42,
+    "maxplaytime": 42,
+    "minplaytime": 42
+  },
+  {
+    "objectname": "One Night Ultimate Werewolf",
+    "average": null,
+    "avgweight": 1.3785,
+    "minplayers": 3,
+    "maxplayers": 10,
+    "playingtime": 10,
+    "maxplaytime": 10,
+    "minplaytime": 10
+  },
+  {
+    "objectname": "Pandemic",
+    "average": null,
+    "avgweight": 2.3968,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 45
+  },
+  {
+    "objectname": "Pandemic Legacy: Season 1",
+    "average": null,
+    "avgweight": 2.8299,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 60,
+    "maxplaytime": 60,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Phase 10",
+    "average": null,
+    "avgweight": 1.2599,
+    "minplayers": 2,
+    "maxplayers": 6,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 45
+  },
+  {
+    "objectname": "Rafter Five",
+    "average": null,
+    "avgweight": 1.1,
+    "minplayers": 1,
+    "maxplayers": 6,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 20
+  },
+  {
+    "objectname": "Risk: Game of Thrones",
+    "average": null,
+    "avgweight": 2.7424,
+    "minplayers": 2,
+    "maxplayers": 7,
+    "playingtime": 240,
+    "maxplaytime": 240,
+    "minplaytime": 120
+  },
+  {
+    "objectname": "Scattergories",
+    "average": null,
+    "avgweight": 1.3585,
+    "minplayers": 2,
+    "maxplayers": 6,
+    "playingtime": 30,
+    "maxplaytime": 30,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Scotland Yard: The Hunt for Mister X",
+    "average": null,
+    "avgweight": 1.4737,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 10
+  },
+  {
+    "objectname": "Scythe",
+    "average": null,
+    "avgweight": 3.4515,
+    "minplayers": 1,
+    "maxplayers": 5,
+    "playingtime": 115,
+    "maxplaytime": 115,
+    "minplaytime": 90
+  },
+  {
+    "objectname": "Secret Hitler",
+    "average": null,
+    "avgweight": 1.7408,
+    "minplayers": 5,
+    "maxplayers": 10,
+    "playingtime": 45,
+    "maxplaytime": 45,
+    "minplaytime": 45
+  },
+  {
+    "objectname": "Sky Team",
+    "average": null,
+    "avgweight": 2.0484,
+    "minplayers": 2,
+    "maxplayers": 2,
+    "playingtime": 15,
+    "maxplaytime": 15,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "Splendor",
+    "average": null,
+    "avgweight": 1.7778,
+    "minplayers": 2,
+    "maxplayers": 4,
+    "playingtime": 30,
+    "maxplaytime": 30,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Spyfall",
+    "average": null,
+    "avgweight": 1.2318,
+    "minplayers": 3,
+    "maxplayers": 8,
+    "playingtime": 15,
+    "maxplaytime": 15,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "Sushi Go Party!",
+    "average": null,
+    "avgweight": 1.3141,
+    "minplayers": 2,
+    "maxplayers": 8,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 20
+  },
+  {
+    "objectname": "Taboo",
+    "average": null,
+    "avgweight": 1.2057,
+    "minplayers": 4,
+    "maxplayers": 10,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 20
+  },
+  {
+    "objectname": "Taco Cat Goat Cheese Pizza",
+    "average": null,
+    "avgweight": 1.0391,
+    "minplayers": 2,
+    "maxplayers": 8,
+    "playingtime": 30,
+    "maxplaytime": 30,
+    "minplaytime": 10
+  },
+  {
+    "objectname": "Terraforming Mars",
+    "average": null,
+    "avgweight": 3.266,
+    "minplayers": 1,
+    "maxplayers": 5,
+    "playingtime": 120,
+    "maxplaytime": 120,
+    "minplaytime": 120
+  },
+  {
+    "objectname": "Ticket to Ride: Europe",
+    "average": null,
+    "avgweight": 1.9175,
+    "minplayers": 2,
+    "maxplayers": 5,
+    "playingtime": 60,
+    "maxplaytime": 60,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Trio",
+    "average": null,
+    "avgweight": 1.0455,
+    "minplayers": 3,
+    "maxplayers": 6,
+    "playingtime": 15,
+    "maxplaytime": 15,
+    "minplaytime": 15
+  },
+  {
+    "objectname": "Two Rooms and a Boom",
+    "average": null,
+    "avgweight": 1.4768,
+    "minplayers": 6,
+    "maxplayers": 30,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 7
+  },
+  {
+    "objectname": "UNO",
+    "average": null,
+    "avgweight": 1.1024,
+    "minplayers": 2,
+    "maxplayers": 10,
+    "playingtime": 30,
+    "maxplaytime": 30,
+    "minplaytime": 30
+  },
+  {
+    "objectname": "Veiled Fate",
+    "average": null,
+    "avgweight": 2.2281,
+    "minplayers": 2,
+    "maxplayers": 8,
+    "playingtime": 90,
+    "maxplaytime": 90,
+    "minplaytime": 60
+  },
+  {
+    "objectname": "Werewords Deluxe Edition",
+    "average": null,
+    "avgweight": 1.3226,
+    "minplayers": 2,
+    "maxplayers": 20,
+    "playingtime": 10,
+    "maxplaytime": 10,
+    "minplaytime": 10
+  },
+  {
+    "objectname": "Wingspan",
+    "average": null,
+    "avgweight": 2.4717,
+    "minplayers": 1,
+    "maxplayers": 5,
+    "playingtime": 70,
+    "maxplaytime": 70,
+    "minplaytime": 40
+  },
+  {
+    "objectname": "You've Got Crabs",
+    "average": null,
+    "avgweight": 1.1579,
+    "minplayers": 4,
+    "maxplayers": 10,
+    "playingtime": 20,
+    "maxplaytime": 20,
+    "minplaytime": 15
   }
 ]
