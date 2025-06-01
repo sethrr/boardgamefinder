@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./card.css";
+import "../styles/card.css";
 import GameFetcher from "./GameFetcher";
 
 function GameFinder() {

@@ -1,0 +1,4 @@
+[dev]
+  framework = "create-react-app"
+  targetPort = 3000  # React's port
+  port = 8888        # Netlify's port
