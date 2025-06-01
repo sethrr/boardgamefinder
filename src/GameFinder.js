@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./card.css";
+import GameFetcher from "./GameFetcher";
 
 function GameFinder() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ function GameFinder() {
 
   // Function to request recommendations from OpenAI API
   const getRecommendations = async () => {
-    if (games.length === 0) return;
+   if (games.length === 0) return;
 
     // Define the prompt for OpenAI
     const prompt = `Here is a list of board games: ${JSON.stringify(games)}. 
@@ -31,7 +32,7 @@ function GameFinder() {
           }, a maximum play time of ${
       timeLength || "any"
     } and a maximum complexity of ${complexity || "any"}. The type of game I am looking for is ${genre}
-          What should I play next? Please recommend up to 2 games that only includes the game name, the game type, the play time and why you recommended it`;
+          What should I play next? Please recommend up to 3 games with their respective IDs only. No other text, just the IDs in a comma separated list.`;
 
     try {
       // Call OpenAI API
@@ -42,10 +43,10 @@ function GameFinder() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}` // Replace with your OpenAI API key
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4.1-nano",
             messages: [
               {
                 role: "system",
@@ -58,14 +59,15 @@ function GameFinder() {
       );
 
       const data = await response.json();
+
       setLoading(false)
-      setIsSubmitted(true);
       // Extract recommendations from the OpenAI response
       setRecommendations(data.choices[0].message.content);
-    } catch (error) {
-      setLoading(false)
-      console.error("Error making API request:", error);
-    }
+      } catch (error) {
+        setLoading(false)
+        console.error("Error making API request:", error);
+        } 
+   setIsSubmitted(true);
   };
 
   const questions = [
@@ -251,13 +253,7 @@ function GameFinder() {
           <>
             <div className="question-slide">
               <div className="textarea-container">
-                <textarea
-                  type="text"
-                  value={recommendations}
-                  placeholder="Write your prompt.."
-                  className="textarea"
-                  readOnly
-                ></textarea>
+              <GameFetcher gameIds={[recommendations]} />
 
              
               </div>

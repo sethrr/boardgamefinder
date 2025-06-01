@@ -40,7 +40,6 @@
     }
 }
 .textarea {
-
     height: 100%;
     width: 100%;
     border-radius: 0.25rem;
@@ -56,11 +55,35 @@
     flex: 1; /* Takes remaining space */
     display: flex;
     margin-bottom: 10px;
+    width: 100%;
+}
 
-  }
-  
-  .textarea {
+.textarea {
     flex: 1;
-    min-height: 300px; 
+    min-height: 300px;
     resize: none;
-  }
+}
+
+.game {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+.game-list {
+    margin-top: 1rem;
+}
+.game-list li + li {
+    margin-top: 2rem;
+}
+.game-details * + *{
+    margin-top: 0.25rem;
+}
+.game-recommendation-title {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    color: lightgray;
+}
+.game-list-container {
+    width: 100%;
+}

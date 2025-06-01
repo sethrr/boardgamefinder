@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./card.css";
 import GameFinder from "./GameFinder";
 
@@ -8,6 +8,8 @@ function App() {
   const handleToggle = () => {
     setActiveFinder((prevState) => !prevState); // Toggles the state
   };
+  
+
 
   return (
     <main className="main">

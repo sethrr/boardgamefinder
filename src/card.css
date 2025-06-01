@@ -12,6 +12,16 @@ h2 {
 h3 {
   font-size: 26px;
 }
+h4 {
+  font-size: 22px;
+}
+h5 {
+  font-size: 18px;
+}
+h6 {
+  font-size: 18px;
+  text-transform: uppercase;
+}
 .card-container {
   display: flex;
   gap: 16px;
