@@ -3,8 +3,8 @@ import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client
 const supabase = createClient(
-  process.env.SUPABASE_DATABASE_URL,
-  process.env.SUPABASE_ANON_KEY,
+  process.env.REACT_APP_SUPABASE_DATABASE_URL,
+  process.env.REACT_APP_SUPABASE_ANON_KEY
 );
 
 export default function GameSettings() {
