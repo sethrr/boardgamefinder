@@ -16,8 +16,8 @@ export default async (request: Request, context: Context) => {
 
   try {
     // Get Supabase credentials from Netlify environment
-    const supabaseUrl = Deno.env.get("SUPABASE_URL") || context.site?.url
-    const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY")
+    const supabaseUrl = Deno.env.get("REACT_APP_SUPABASE_DATABASE_URL") || context.site?.url
+    const supabaseKey = Deno.env.get("REACT_APP_SUPABASE_ANON_KEY")
 
     if (!supabaseUrl || !supabaseKey) {
       throw new Error("Supabase credentials not found in environment")
