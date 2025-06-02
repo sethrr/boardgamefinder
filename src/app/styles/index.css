@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
     .main {
         @apply bg-gradient-to-b min-h-screen flex items-center justify-center from-gray-700 to-gray-900;
@@ -22,6 +23,7 @@
     justify-content: flex-start;
     padding-top: 2rem;
 }
+
 .intro-container {
     color: white;
     display: flex;

@@ -1,174 +1,183 @@
 .game-settings {
-          max-width: 64rem;
-          margin: 0 auto;
-          padding: 1.5rem;
-        }
+    width: 100%;
+    margin: 0 auto;
+    padding: 5rem;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-        .game-settings__header {
-          margin-bottom: 1.5rem;
-        }
+    @media screen and (max-width: 767px) {
+        padding: 2rem;
+    } 
+}
 
-        .game-settings__title {
-          font-size: 1.875rem;
-          font-weight: bold;
-          color: #1f2937;
-          margin-bottom: 0.5rem;
-        }
+.game-settings__header {
+    margin-bottom: 1.5rem;
+}
 
-        .game-settings__description {
-          color: #4b5563;
-        }
+.game-settings__title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
 
-        .game-settings__summary {
-          background-color: #f9fafb;
-          border-radius: 0.5rem;
-          padding: 1rem;
-          margin-bottom: 1.5rem;
-        }
+.game-settings__description {
+    color: #9ca3af;
+}
 
-        .game-settings__summary-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
+.game-settings__summary {
+    width: 100%;
+}
 
-        .game-settings__stats {
-          font-size: 0.875rem;
-          color: #4b5563;
-        }
+.game-settings__summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 
-        .game-settings__stats-number {
-          font-weight: 600;
-        }
+.game-settings__stats {
+    font-size: 1rem;
+    color: #d4a17b;
+}
 
-        .game-settings__saving-indicator {
-          margin-left: 0.5rem;
-          color: #2563eb;
-        }
+.game-settings__stats-number {
+    font-weight: 600;
+}
 
-        .game-settings__actions {
-          display: flex;
-          gap: 0.5rem;
-        }
+.game-settings__saving-indicator {
+    margin-left: 0.5rem;
+    color: #2563eb;
+}
 
-        .game-settings__button {
-          font-size: 0.875rem;
-          color: white;
-          padding: 0.25rem 0.75rem;
-          border: none;
-          border-radius: 0.25rem;
-          cursor: pointer;
-          transition: background-color 0.2s;
-        }
+.game-settings__actions {
+    display: flex;
+    gap: 0.5rem;
+}
 
-        .game-settings__button:disabled {
-          background-color: #9ca3af;
-          cursor: not-allowed;
-        }
+.game-settings__button {
+    font-size: 0.875rem;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
 
-        .game-settings__button--show-all {
-          background-color: #22c55e;
-        }
+.game-settings__button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
 
-        .game-settings__button--show-all:hover:not(:disabled) {
-          background-color: #16a34a;
-        }
+.game-settings__button--show-all {
+    background-color: white;
+    border: 1px solid #d4a17b;
+    color: #d4a17b;
+}
 
-        .game-settings__button--hide-all {
-          background-color: #ef4444;
-        }
+.game-settings__button--show-all:hover:not(:disabled) {
+    background-color: white;
+    border: 1px solid #d4a17b;
+    color: #d4a17b;
+}
 
-        .game-settings__button--hide-all:hover:not(:disabled) {
-          background-color: #dc2626;
-        }
+.game-settings__button--hide-all {
+    background-color: #d4a17b;
+}
 
-        .game-settings__games-list {
-          background-color: white;
-          border-radius: 0.5rem;
-          border: 1px solid #e5e7eb;
-        }
+.game-settings__button--hide-all:hover:not(:disabled) {
+    background-color: #d4a17b;
+}
 
-        .game-settings__game-item {
-          display: flex;
-          align-items: center;
-          padding: 1rem;
-          transition: background-color 0.2s;
-        }
+.game-settings__games-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+    width: 100%;
+}
 
-        .game-settings__game-item:hover {
-          background-color: #f9fafb;
-        }
+.game-settings__game-card {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
 
-        .game-settings__game-item--with-border {
-          border-bottom: 1px solid #e5e7eb;
-        }
+.game-settings__game-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 
-        .game-settings__game-label {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          cursor: pointer;
-          flex: 1;
-        }
+.game-settings__game-card--hidden {
+    opacity: 0.3;
+}
 
-        .game-settings__checkbox {
-          width: 1.25rem;
-          height: 1.25rem;
-          color: #2563eb;
-          background-color: #f3f4f6;
-          border: 1px solid #d1d5db;
-          border-radius: 0.25rem;
-        }
+.game-settings__game-card--visible {
+    opacity: 1;
+}
 
-        .game-settings__checkbox:focus {
-          outline: 2px solid #3b82f6;
-          outline-offset: 2px;
-        }
+.game-settings__game-card--disabled {
+    cursor: not-allowed;
+}
 
-        .game-settings__checkbox:disabled {
-          opacity: 0.5;
-        }
+.game-settings__game-title {
+    font-weight: 600;
+    color: #111827;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
 
-        .game-settings__game-content {
-          flex: 1;
-        }
+.game-settings__game-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
 
-        .game-settings__game-title {
-          font-weight: 500;
-          color: #111827;
-        }
+.game-settings__game-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
 
-        .game-settings__game-description {
-          font-size: 0.875rem;
-          color: #6b7280;
-          margin-top: 0.25rem;
-        }
+.game-settings__game-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
 
-        .game-settings__game-meta {
-          display: flex;
-          gap: 1rem;
-          margin-top: 0.5rem;
-          font-size: 0.75rem;
-          color: #9ca3af;
-        }
+.game-settings__visibility-indicator {
+    position: absolute;
+    top: .25rem;
+    right: 1rem;
+    transition: all 0.3s ease;
+}
 
-        .game-settings__visibility-indicator {
-          width: 0.75rem;
-          height: 0.75rem;
-          border-radius: 50%;
-          margin-left: 0.75rem;
-        }
+.game-settings__visibility-indicator--visible {
+    &:after {
+        content: "✓";
+        color: #3e5076;
+        font-size: 25px;
+        font-weight: bolder;
+    }
+}
 
-        .game-settings__visibility-indicator--visible {
-          background-color: #4ade80;
-        }
+.game-settings__visibility-indicator--hidden {
+    background-color: #d1d5db;
+}
 
-        .game-settings__visibility-indicator--hidden {
-          background-color: #d1d5db;
-        }
-
-        .game-settings__empty-state {
-          text-align: center;
-          padding: 2rem;
-          color: #6b7280;
-        }
+.game-settings__empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}

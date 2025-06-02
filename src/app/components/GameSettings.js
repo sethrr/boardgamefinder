@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
+import "../styles/game-settings.css";
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -299,12 +300,13 @@ export default function GameSettings() {
   }
 
   return (
-    <div className="game-settings">
+     <div className="game-settings">
       <div className="game-settings__header">
-        <h1 className="game-settings__title">Game Visibility Settings</h1>
+        <h1 className="game-settings__title">
+          Game Visibility Settings
+        </h1>
         <p className="game-settings__description">
-          Control which games appear in recommendations. Changes are saved
-          automatically.
+          Control which games appear in recommendations. Changes are saved automatically.
         </p>
       </div>
 
@@ -312,17 +314,9 @@ export default function GameSettings() {
       <div className="game-settings__summary">
         <div className="game-settings__summary-row">
           <div className="game-settings__stats">
-            <span className="game-settings__stats-number">
-              {getVisibleCount()}
-            </span>{" "}
-            of{" "}
-            <span className="game-settings__stats-number">
-              {getTotalCount()}
-            </span>{" "}
-            games visible
-            {saving && (
-              <span className="game-settings__saving-indicator">Saving...</span>
-            )}
+            <span className="game-settings__stats-number">{getVisibleCount()}</span> of{' '}
+            <span className="game-settings__stats-number">{getTotalCount()}</span> games visible
+            {saving && <span className="game-settings__saving-indicator">Saving...</span>}
           </div>
           <div className="game-settings__actions">
             <button
@@ -345,52 +339,55 @@ export default function GameSettings() {
 
       {/* Games list */}
       <div className="game-settings__games-list">
-        <div>
-          {games.map((game, index) => (
-            <div
-              key={game.game_id}
-              className={`game-settings__game-item ${
-                index !== games.length - 1
-                  ? "game-settings__game-item--with-border"
-                  : ""
-              }`}
-            >
-              <label className="game-settings__game-label">
-                <input
-                  type="checkbox"
-                  checked={visibility[game.game_id] ?? true}
-                  onChange={() => handleToggle(game.game_id)}
-                  disabled={saving}
-                  className="game-settings__checkbox"
-                />
-                <div className="game-settings__game-content">
-                  <div className="game-settings__game-title">{game.title}</div>
-                  {game.description && (
-                    <div className="game-settings__game-description">
-                      {game.description}
-                    </div>
-                  )}
-                  {(game.players || game.playtime || game.category) && (
-                    <div className="game-settings__game-meta">
-                      {game.players && <span>👥 {game.players}</span>}
-                      {game.playtime && <span>⏰ {game.playtime}</span>}
-                      {game.category && <span>🎲 {game.category}</span>}
-                    </div>
-                  )}
-                </div>
-              </label>
-
-              {/* Visual indicator */}
-              <div
-                className={`game-settings__visibility-indicator ${
-                  visibility[game.game_id]
-                    ? "game-settings__visibility-indicator--visible"
-                    : "game-settings__visibility-indicator--hidden"
-                }`}
-              />
+        {games.map((game) => (
+          <div
+            key={game.game_id}
+            className={`game-settings__game-card ${
+              visibility[game.game_id] 
+                ? 'game-settings__game-card--visible' 
+                : 'game-settings__game-card--hidden'
+            } ${saving ? 'game-settings__game-card--disabled' : ''}`}
+            onClick={() => !saving && handleToggle(game.game_id)}
+          >
+            <div className="game-settings__game-title">
+              {game.title}
             </div>
-          ))}
-        </div>
+            {game.description && (
+              <div className="game-settings__game-description">
+                {game.description}
+              </div>
+            )}
+            {(game.players || game.playtime || game.category) && (
+              <div className="game-settings__game-meta">
+                {game.players && (
+                  <div className="game-settings__game-meta-item">
+                    <span>👥</span>
+                    <span>{game.players}</span>
+                  </div>
+                )}
+                {game.playtime && (
+                  <div className="game-settings__game-meta-item">
+                    <span>⏰</span>
+                    <span>{game.playtime}</span>
+                  </div>
+                )}
+                {game.category && (
+                  <div className="game-settings__game-meta-item">
+                    <span>🎲</span>
+                    <span>{game.category}</span>
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {/* Visual indicator */}
+            <div className={`game-settings__visibility-indicator ${
+              visibility[game.game_id] 
+                ? 'game-settings__visibility-indicator--visible' 
+                : 'game-settings__visibility-indicator--hidden'
+            }`} />
+          </div>
+        ))}
       </div>
 
       {games.length === 0 && (
