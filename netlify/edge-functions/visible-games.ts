@@ -1,4 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
+// @ts-nocheck
 import { Context } from "https://edge.netlify.com"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 

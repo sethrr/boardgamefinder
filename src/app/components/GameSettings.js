@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -24,21 +24,21 @@ export default function GameSettings() {
       setError(null);
 
       // Load games from your JSON file
-      const gamesRes = await fetch('/games_db.json');
-      
+      const gamesRes = await fetch("/games_db.json");
+
       if (!gamesRes.ok) {
-        throw new Error('Failed to load games');
+        throw new Error("Failed to load games");
       }
 
       const gamesData = await gamesRes.json();
 
       // Load visibility settings from Supabase
       const { data: visibilityData, error: visibilityError } = await supabase
-        .from('game_visibility')
-        .select('*');
+        .from("game_visibility")
+        .select("*");
 
       if (visibilityError) {
-        console.warn('Error loading visibility settings:', visibilityError);
+        console.warn("Error loading visibility settings:", visibilityError);
       }
 
       setGames(gamesData);
@@ -46,13 +46,13 @@ export default function GameSettings() {
       // Convert visibility array to object for easier lookup
       // Use game_id consistently (not id)
       const visibilityMap = {};
-      gamesData.forEach(game => {
+      gamesData.forEach((game) => {
         visibilityMap[game.game_id] = true; // default to visible
       });
 
       // Override with saved settings from Supabase
       if (visibilityData) {
-        visibilityData.forEach(item => {
+        visibilityData.forEach((item) => {
           visibilityMap[item.game_id] = item.is_visible;
         });
       }
@@ -60,50 +60,51 @@ export default function GameSettings() {
       setVisibility(visibilityMap);
     } catch (err) {
       setError(err.message);
-      console.error('Error loading data:', err);
+      console.error("Error loading data:", err);
     } finally {
       setLoading(false);
     }
   };
 
-const handleToggle = async (gameId) => {
-  const game = games.find(g => g.game_id === gameId);
-  if (!game) return;
+  const handleToggle = async (gameId) => {
+    const game = games.find((g) => g.game_id === gameId);
+    if (!game) return;
 
-  const newVisibility = !visibility[gameId];
+    const newVisibility = !visibility[gameId];
 
-  // Update only the specific game's visibility
-  setVisibility(prev => ({
-    ...prev,
-    [gameId]: newVisibility
-  }));
-
-  try {
-    setSaving(true);
-    
-    const { error } = await supabase
-      .from("game_visibility")
-      .upsert({
-        title: game.title,
-        game_id: gameId,
-        is_visible: newVisibility,
-        updated_at: new Date().toISOString()
-      }, {
-        onConflict: 'game_id'
-      });
-
-    if (error) throw error;
-  } catch (err) {
-    // Revert only the changed game on error
-    setVisibility(prev => ({
+    // Update only the specific game's visibility
+    setVisibility((prev) => ({
       ...prev,
-      [gameId]: !newVisibility
+      [gameId]: newVisibility
     }));
-    setError(`Failed to update ${game.title}: ${err.message}`);
-  } finally {
-    setSaving(false);
-  }
-};
+
+    try {
+      setSaving(true);
+
+      const { error } = await supabase.from("game_visibility").upsert(
+        {
+          title: game.title,
+          game_id: gameId,
+          is_visible: newVisibility,
+          updated_at: new Date().toISOString()
+        },
+        {
+          onConflict: "game_id"
+        }
+      );
+
+      if (error) throw error;
+    } catch (err) {
+      // Revert only the changed game on error
+      setVisibility((prev) => ({
+        ...prev,
+        [gameId]: !newVisibility
+      }));
+      setError(`Failed to update ${game.title}: ${err.message}`);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const getVisibleCount = () => {
     return Object.values(visibility).filter(Boolean).length;
@@ -116,17 +117,23 @@ const handleToggle = async (gameId) => {
   const handleSelectAll = async () => {
     const updates = [];
     const inserts = [];
-    
+
     // Get current data from Supabase to determine what to update vs insert
     const { data: existingData } = await supabase
-      .from('game_visibility')
-      .select('game_id')
-      .in('game_id', games.map(g => g.game_id)); // Use game_id
+      .from("game_visibility")
+      .select("game_id")
+      .in(
+        "game_id",
+        games.map((g) => g.game_id)
+      ); // Use game_id
 
-    const existingGameIds = new Set(existingData?.map(item => item.game_id) || []);
+    const existingGameIds = new Set(
+      existingData?.map((item) => item.game_id) || []
+    );
 
-    games.forEach(game => {
-      if (!visibility[game.game_id]) { // Use game_id
+    games.forEach((game) => {
+      if (!visibility[game.game_id]) {
+        // Use game_id
         const record = {
           title: game.title || game.game_id, // Use game_id as fallback
           game_id: game.game_id, // Use game_id
@@ -134,7 +141,8 @@ const handleToggle = async (gameId) => {
           updated_at: new Date().toISOString()
         };
 
-        if (existingGameIds.has(game.game_id)) { // Use game_id
+        if (existingGameIds.has(game.game_id)) {
+          // Use game_id
           updates.push(record);
         } else {
           inserts.push(record);
@@ -146,25 +154,25 @@ const handleToggle = async (gameId) => {
 
     // Optimistic update
     const newVisibility = {};
-    games.forEach(game => {
+    games.forEach((game) => {
       newVisibility[game.game_id] = true; // Use game_id
     });
     setVisibility(newVisibility);
 
     try {
       setSaving(true);
-      
+
       // Perform updates
       if (updates.length > 0) {
         for (const update of updates) {
           const { error } = await supabase
-            .from('game_visibility')
-            .update({ 
+            .from("game_visibility")
+            .update({
               is_visible: update.is_visible,
-              updated_at: update.updated_at 
+              updated_at: update.updated_at
             })
-            .eq('game_id', update.game_id);
-          
+            .eq("game_id", update.game_id);
+
           if (error) throw error;
         }
       }
@@ -172,12 +180,11 @@ const handleToggle = async (gameId) => {
       // Perform inserts
       if (inserts.length > 0) {
         const { error } = await supabase
-          .from('game_visibility')
+          .from("game_visibility")
           .insert(inserts);
-        
+
         if (error) throw error;
       }
-
     } catch (err) {
       // Revert on error
       loadData();
@@ -190,17 +197,23 @@ const handleToggle = async (gameId) => {
   const handleSelectNone = async () => {
     const updates = [];
     const inserts = [];
-    
+
     // Get current data from Supabase to determine what to update vs insert
     const { data: existingData } = await supabase
-      .from('game_visibility')
-      .select('game_id')
-      .in('game_id', games.map(g => g.game_id)); // Use game_id
+      .from("game_visibility")
+      .select("game_id")
+      .in(
+        "game_id",
+        games.map((g) => g.game_id)
+      ); // Use game_id
 
-    const existingGameIds = new Set(existingData?.map(item => item.game_id) || []);
+    const existingGameIds = new Set(
+      existingData?.map((item) => item.game_id) || []
+    );
 
-    games.forEach(game => {
-      if (visibility[game.game_id]) { // Use game_id
+    games.forEach((game) => {
+      if (visibility[game.game_id]) {
+        // Use game_id
         const record = {
           title: game.title || game.game_id, // Use game_id as fallback
           game_id: game.game_id, // Use game_id
@@ -208,7 +221,8 @@ const handleToggle = async (gameId) => {
           updated_at: new Date().toISOString()
         };
 
-        if (existingGameIds.has(game.game_id)) { // Use game_id
+        if (existingGameIds.has(game.game_id)) {
+          // Use game_id
           updates.push(record);
         } else {
           inserts.push(record);
@@ -220,25 +234,25 @@ const handleToggle = async (gameId) => {
 
     // Optimistic update
     const newVisibility = {};
-    games.forEach(game => {
+    games.forEach((game) => {
       newVisibility[game.game_id] = false; // Use game_id
     });
     setVisibility(newVisibility);
 
     try {
       setSaving(true);
-      
+
       // Perform updates
       if (updates.length > 0) {
         for (const update of updates) {
           const { error } = await supabase
-            .from('game_visibility')
-            .update({ 
+            .from("game_visibility")
+            .update({
               is_visible: update.is_visible,
-              updated_at: update.updated_at 
+              updated_at: update.updated_at
             })
-            .eq('game_id', update.game_id);
-          
+            .eq("game_id", update.game_id);
+
           if (error) throw error;
         }
       }
@@ -246,12 +260,11 @@ const handleToggle = async (gameId) => {
       // Perform inserts
       if (inserts.length > 0) {
         const { error } = await supabase
-          .from('game_visibility')
+          .from("game_visibility")
           .insert(inserts);
-        
+
         if (error) throw error;
       }
-
     } catch (err) {
       // Revert on error
       loadData();
@@ -275,7 +288,7 @@ const handleToggle = async (gameId) => {
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           <strong>Error:</strong> {error}
         </div>
-        <button 
+        <button
           onClick={loadData}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
@@ -286,36 +299,43 @@ const handleToggle = async (gameId) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
-          Game Visibility Settings
-        </h1>
-        <p className="text-gray-600">
-          Control which games appear in recommendations. Changes are saved automatically.
+    <div className="game-settings">
+      <div className="game-settings__header">
+        <h1 className="game-settings__title">Game Visibility Settings</h1>
+        <p className="game-settings__description">
+          Control which games appear in recommendations. Changes are saved
+          automatically.
         </p>
       </div>
 
       {/* Summary and bulk actions */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-600">
-            <span className="font-semibold">{getVisibleCount()}</span> of{' '}
-            <span className="font-semibold">{getTotalCount()}</span> games visible
-            {saving && <span className="ml-2 text-blue-600">Saving...</span>}
+      <div className="game-settings__summary">
+        <div className="game-settings__summary-row">
+          <div className="game-settings__stats">
+            <span className="game-settings__stats-number">
+              {getVisibleCount()}
+            </span>{" "}
+            of{" "}
+            <span className="game-settings__stats-number">
+              {getTotalCount()}
+            </span>{" "}
+            games visible
+            {saving && (
+              <span className="game-settings__saving-indicator">Saving...</span>
+            )}
           </div>
-          <div className="space-x-2">
+          <div className="game-settings__actions">
             <button
               onClick={handleSelectAll}
               disabled={saving}
-              className="text-sm bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white px-3 py-1 rounded"
+              className="game-settings__button game-settings__button--show-all"
             >
               Show All
             </button>
             <button
               onClick={handleSelectNone}
               disabled={saving}
-              className="text-sm bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white px-3 py-1 rounded"
+              className="game-settings__button game-settings__button--hide-all"
             >
               Hide All
             </button>
@@ -324,59 +344,57 @@ const handleToggle = async (gameId) => {
       </div>
 
       {/* Games list */}
-      <div className="bg-white rounded-lg border border-gray-200">
-        <div className="grid gap-0">
+      <div className="game-settings__games-list">
+        <div>
           {games.map((game, index) => (
             <div
-              key={game.game_id} // Use game_id for React key
-              className={`flex items-center p-4 ${
-                index !== games.length - 1 ? 'border-b border-gray-200' : ''
-              } hover:bg-gray-50 transition-colors`}
+              key={game.game_id}
+              className={`game-settings__game-item ${
+                index !== games.length - 1
+                  ? "game-settings__game-item--with-border"
+                  : ""
+              }`}
             >
-              <label className="flex items-center space-x-3 cursor-pointer flex-1">
+              <label className="game-settings__game-label">
                 <input
                   type="checkbox"
-                  checked={visibility[game.game_id] ?? true} // Use game_id
-                  onChange={() => handleToggle(game.game_id)} // Use game_id
+                  checked={visibility[game.game_id] ?? true}
+                  onChange={() => handleToggle(game.game_id)}
                   disabled={saving}
-                  className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 disabled:opacity-50"
+                  className="game-settings__checkbox"
                 />
-                <div className="flex-1">
-                  <div className="font-medium text-gray-900">
-                    {game.title}
-                  </div>
+                <div className="game-settings__game-content">
+                  <div className="game-settings__game-title">{game.title}</div>
                   {game.description && (
-                    <div className="text-sm text-gray-500 mt-1">
+                    <div className="game-settings__game-description">
                       {game.description}
                     </div>
                   )}
                   {(game.players || game.playtime || game.category) && (
-                    <div className="flex space-x-4 mt-2 text-xs text-gray-400">
-                      {game.players && (
-                        <span>👥 {game.players}</span>
-                      )}
-                      {game.playtime && (
-                        <span>⏰ {game.playtime}</span>
-                      )}
-                      {game.category && (
-                        <span>🎲 {game.category}</span>
-                      )}
+                    <div className="game-settings__game-meta">
+                      {game.players && <span>👥 {game.players}</span>}
+                      {game.playtime && <span>⏰ {game.playtime}</span>}
+                      {game.category && <span>🎲 {game.category}</span>}
                     </div>
                   )}
                 </div>
               </label>
-              
+
               {/* Visual indicator */}
-              <div className={`w-3 h-3 rounded-full ml-3 ${
-                visibility[game.game_id] ? 'bg-green-400' : 'bg-gray-300'
-              }`} />
+              <div
+                className={`game-settings__visibility-indicator ${
+                  visibility[game.game_id]
+                    ? "game-settings__visibility-indicator--visible"
+                    : "game-settings__visibility-indicator--hidden"
+                }`}
+              />
             </div>
           ))}
         </div>
       </div>
 
       {games.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
+        <div className="game-settings__empty-state">
           No games found. Make sure your games.json file is accessible.
         </div>
       )}
