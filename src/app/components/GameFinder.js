@@ -9,18 +9,27 @@ function GameFinder() {
 
   // Load the games data from the public directory (or a local file)
   useEffect(() => {
-    fetch("/games.json") // Adjust the path based on your app structure
-      .then((res) => res.json())
-      .then((data) => {
-        setGames(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error loading games:", err);
-        setLoading(false);
-      });
+   getVisibleGames();
   }, []);
 
+  const getVisibleGames = async () => {
+  try {
+    const response = await fetch('/api/visible-games')
+    const data = await response.json()
+    
+    if (response.ok) {
+       setGames(data.games);
+       console.log('Games loaded:', data.games);
+      return; 
+    } else {
+      console.error('API Error:', data.error)
+      return []
+    }
+  } catch (error) {
+    console.error('Network error:', error)
+    return []
+  }
+}
   // Function to request recommendations from OpenAI API
   const getRecommendations = async () => {
    if (games.length === 0) return;

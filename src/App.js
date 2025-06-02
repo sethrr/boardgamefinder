@@ -14,11 +14,8 @@ import Settings from "./pages/settings";
 function App() {
     return (
         <Router>
-         
-            {/*Implementing Routes for respective Path */}
             <Routes>
                 <Route path="/" element={<Quiz />} />
-
                 <Route path="/settings" element={<Settings />} />
             </Routes>
           
