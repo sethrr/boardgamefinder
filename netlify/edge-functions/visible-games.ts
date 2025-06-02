@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { Context } from "https://edge.netlify.com"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
@@ -23,45 +24,72 @@ export default async (request: Request, context: Context) => {
       throw new Error("Supabase credentials not found in environment")
     }
 
-    // Create Supabase client
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    // Create Supabase client with options to disable caching
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      db: {
+        schema: 'public',
+      },
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+      realtime: {
+        params: {
+          eventsPerSecond: 10,
+        },
+      },
+    })
 
     console.log("Loading visibility data from Supabase...")
     console.log("Supabase URL:", supabaseUrl)
     console.log("Supabase Key exists:", !!supabaseKey)
+    console.log("Request timestamp:", new Date().toISOString())
     
-    // Test basic connection first
-    const { data: testData, error: testError } = await supabase
+    // Add a timestamp to help debug caching issues
+    const queryTimestamp = Date.now()
+    
+    // Test basic connection first with cache busting
+    const { data: testData, error: testError, count } = await supabase
       .from("game_visibility")
-      .select("count", { count: "exact", head: true })
+      .select("*", { count: "exact", head: true })
+      .limit(1)
 
     if (testError) {
       console.error("Supabase connection test failed:", testError)
       throw new Error(`Database connection error: ${testError.message} (Code: ${testError.code})`)
     }
 
-    console.log("Supabase connection successful, table has", testData, "rows")
+    console.log("Supabase connection successful, table has", count, "rows at", new Date().toISOString())
     
-    // Get visibility preferences from Supabase
+    // Get visibility preferences from Supabase with explicit ordering to avoid cache
     const { data: visibilityData, error: visError } = await supabase
       .from("game_visibility")
-      .select("game_id, is_visible")
+      .select("game_id, is_visible, updated_at")
       .eq("is_visible", true)
+      .order("updated_at", { ascending: false })
 
     if (visError) {
       console.error("Supabase query error:", visError)
       throw new Error(`Database query error: ${visError.message} (Code: ${visError.code})`)
     }
 
-    console.log(`Found ${visibilityData?.length || 0} visible games in database`)
+    console.log(`Found ${visibilityData?.length || 0} visible games in database at ${new Date().toISOString()}`)
+    console.log("Visible game IDs:", visibilityData?.map(v => v.game_id) || [])
 
     // Load complete games database from your JSON file
-    // This will load from your Netlify site's public folder
-    const gamesUrl = `${new URL(request.url).origin}/games_db.json`
+    const gamesUrl = `${new URL(request.url).origin}/games_db.json?t=${queryTimestamp}`
     
     console.log("Loading games from JSON:", gamesUrl)
     
-    const gamesResponse = await fetch(gamesUrl)
+    const gamesResponse = await fetch(gamesUrl, {
+      // Disable caching for the JSON fetch as well
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    })
+    
     if (!gamesResponse.ok) {
       throw new Error(`Failed to load games database: ${gamesResponse.status} ${gamesResponse.statusText}`)
     }
@@ -73,7 +101,6 @@ export default async (request: Request, context: Context) => {
     const visibleGameIds = new Set(visibilityData?.map(v => v.game_id) || [])
     
     // Filter games based on visibility settings
-    // If no visibility settings exist, default to showing all games
     const visibleGames = allGames.filter(game => {
       if (visibleGameIds.size === 0) {
         // No visibility preferences set - show all games
@@ -90,6 +117,8 @@ export default async (request: Request, context: Context) => {
       total_visible: visibleGames.length,
       total_available: allGames.length,
       visibility_rules_count: visibilityData?.length || 0,
+      query_timestamp: queryTimestamp,
+      server_time: new Date().toISOString(),
     }
 
     return new Response(JSON.stringify(response), {
@@ -98,6 +127,10 @@ export default async (request: Request, context: Context) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        // Prevent caching of the response
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
       },
     })
 
@@ -106,12 +139,14 @@ export default async (request: Request, context: Context) => {
     
     return new Response(JSON.stringify({ 
       error: error.message,
-      details: "Check function logs for more information"
+      details: "Check function logs for more information",
+      timestamp: new Date().toISOString()
     }), {
       status: 500,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       },
     })
   }
