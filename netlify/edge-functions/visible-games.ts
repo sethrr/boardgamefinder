@@ -1,5 +1,5 @@
-import { Context } from "@netlify/edge-functions"
-import { createClient } from "@supabase/supabase-js"
+import { Context } from "https://edge.netlify.com"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 export default async (request: Request, context: Context) => {
   // Handle CORS preflight
@@ -27,6 +27,20 @@ export default async (request: Request, context: Context) => {
     const supabase = createClient(supabaseUrl, supabaseKey)
 
     console.log("Loading visibility data from Supabase...")
+    console.log("Supabase URL:", supabaseUrl)
+    console.log("Supabase Key exists:", !!supabaseKey)
+    
+    // Test basic connection first
+    const { data: testData, error: testError } = await supabase
+      .from("game_visibility")
+      .select("count", { count: "exact", head: true })
+
+    if (testError) {
+      console.error("Supabase connection test failed:", testError)
+      throw new Error(`Database connection error: ${testError.message} (Code: ${testError.code})`)
+    }
+
+    console.log("Supabase connection successful, table has", testData, "rows")
     
     // Get visibility preferences from Supabase
     const { data: visibilityData, error: visError } = await supabase
@@ -35,8 +49,8 @@ export default async (request: Request, context: Context) => {
       .eq("is_visible", true)
 
     if (visError) {
-      console.error("Supabase error:", visError)
-      throw new Error(`Database error: ${visError.message}`)
+      console.error("Supabase query error:", visError)
+      throw new Error(`Database query error: ${visError.message} (Code: ${visError.code})`)
     }
 
     console.log(`Found ${visibilityData?.length || 0} visible games in database`)
