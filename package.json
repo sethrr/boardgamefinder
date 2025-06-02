@@ -7,7 +7,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "dotenv": "^16.5.0",
-    "faunadb": "^4.8.2",
     "openai": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -43,7 +42,6 @@
     "@deno/types": "^0.0.1",
     "@netlify/edge-functions": "^2.12.0",
     "@supabase/supabase-js": "^2.49.8",
-    "tailwindcss": "^3.2.4",
-    "typescript": "^5.8.3"
+    "tailwindcss": "^3.2.4"
   }
 }
