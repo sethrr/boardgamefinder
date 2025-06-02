@@ -74,7 +74,8 @@ export default async (request: Request, context: Context) => {
     }
 
     console.log(`Found ${visibilityData?.length || 0} visible games in database at ${new Date().toISOString()}`)
-    console.log("Visible game IDs:", visibilityData?.map(v => v.game_id) || [])
+    console.log("Visible game IDs from DB:", visibilityData?.map(v => v.game_id) || [])
+    console.log("Visible game ID types from DB:", visibilityData?.map(v => typeof v.game_id) || [])
 
     // Load complete games database from your JSON file
     const gamesUrl = `${new URL(request.url).origin}/games_db.json?t=${queryTimestamp}`
@@ -96,9 +97,18 @@ export default async (request: Request, context: Context) => {
     
     const allGames = await gamesResponse.json()
     console.log(`Loaded ${allGames.length} total games from JSON`)
+    
+    // Debug: Check the first few games from JSON
+    console.log("Sample game IDs from JSON:", allGames.slice(0, 5).map(g => g.game_id))
+    console.log("Sample game ID types from JSON:", allGames.slice(0, 5).map(g => typeof g.game_id))
 
     // Create set of visible game IDs for fast lookup
-    const visibleGameIds = new Set(visibilityData?.map(v => v.game_id) || [])
+    // Handle both string and number types by normalizing to strings
+    const visibleGameIds = new Set(
+      visibilityData?.map(v => String(v.game_id)) || []
+    )
+    
+    console.log("Normalized visible game IDs (as strings):", Array.from(visibleGameIds))
     
     // Filter games based on visibility settings
     const visibleGames = allGames.filter(game => {
@@ -106,8 +116,16 @@ export default async (request: Request, context: Context) => {
         // No visibility preferences set - show all games
         return true
       }
-      // Only show games that are explicitly marked as visible
-      return visibleGameIds.has(game.game_id)
+      // Normalize game.game_id to string for comparison
+      const gameIdStr = String(game.game_id)
+      const isVisible = visibleGameIds.has(gameIdStr)
+      
+      // Debug logging for first few games
+      if (allGames.indexOf(game) < 5) {
+        console.log(`Game ${game.game_id} (${typeof game.game_id} -> "${gameIdStr}") is visible: ${isVisible}`)
+      }
+      
+      return isVisible
     })
 
     console.log(`Returning ${visibleGames.length} visible games`)
