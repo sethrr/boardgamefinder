@@ -66,41 +66,44 @@ export default function GameSettings() {
     }
   };
 
-  const handleToggle = async (gameId) => {
-    // Use game_id instead of id
-    const game = games.find(g => g.game_id === gameId);
-    if (!game) return;
+const handleToggle = async (gameId) => {
+  const game = games.find(g => g.game_id === gameId);
+  if (!game) return;
 
-    const newVisibility = !visibility[gameId];
+  const newVisibility = !visibility[gameId];
 
-    // Update only the specific game's visibility
-    setVisibility(prev => ({
-      ...prev,
-      [gameId]: newVisibility
-    }));
+  // Update only the specific game's visibility
+  setVisibility(prev => ({
+    ...prev,
+    [gameId]: newVisibility
+  }));
 
-    try {
-      setSaving(true);
-      
-      const { error } = await supabase.from("game_visibility").upsert({
+  try {
+    setSaving(true);
+    
+    const { error } = await supabase
+      .from("game_visibility")
+      .upsert({
         title: game.title,
         game_id: gameId,
         is_visible: newVisibility,
         updated_at: new Date().toISOString()
+      }, {
+        onConflict: 'game_id'
       });
 
-      if (error) throw error;
-    } catch (err) {
-      // Revert only the changed game on error
-      setVisibility(prev => ({
-        ...prev,
-        [gameId]: !newVisibility
-      }));
-      setError(`Failed to update ${game.title}: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
+    if (error) throw error;
+  } catch (err) {
+    // Revert only the changed game on error
+    setVisibility(prev => ({
+      ...prev,
+      [gameId]: !newVisibility
+    }));
+    setError(`Failed to update ${game.title}: ${err.message}`);
+  } finally {
+    setSaving(false);
+  }
+};
 
   const getVisibleCount = () => {
     return Object.values(visibility).filter(Boolean).length;
