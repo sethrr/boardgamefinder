@@ -2,6 +2,7 @@ import React from "react";
 import {
     BrowserRouter as Router,
     Routes,
+    Link,
     Route,
 } from "react-router-dom";
 import Quiz from "./pages/quiz";
@@ -20,6 +21,7 @@ function App() {
 
                 <Route path="/settings" element={<Settings />} />
             </Routes>
+          
         </Router>
     );
 }

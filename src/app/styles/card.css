@@ -67,6 +67,7 @@ h6 {
   flex-direction: column;
   padding: 20px;
   overflow: auto;
+  justify-content: center;
 }
 
 .question-slide h2 {
@@ -146,6 +147,19 @@ h6 {
 .next-button.start-over {
   background: #3e5076;
   margin-bottom: 2rem;
+}
+.next-button.settings {
+  background: #3e5076;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.settings-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: white;
 }
 
 @media only screen and (max-width: 800px) {
