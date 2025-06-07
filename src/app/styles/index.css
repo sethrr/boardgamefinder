@@ -1,20 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-@layer components {
-    .main {
-        @apply bg-gradient-to-b min-h-screen flex items-center justify-center from-gray-700 to-gray-900;
-    }
-
-    .btn {
-        @apply py-1.5 lg:py-2 text-lg text-gray-100 rounded px-8 hover:opacity-90 bg-teal-700 font-semibold mt-5 w-full disabled:opacity-50;
-    }
-
-    .result {
-        @apply -mt-8 whitespace-pre-line text-gray-200;
-    }
+body {
+  font-family: "Barlow", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+h1 {
+  font-size: 36px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 26px;
+}
+h4 {
+  font-size: 22px;
+}
+h5 {
+  font-size: 18px;
+}
+h6 {
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 .main {
@@ -22,6 +28,14 @@
     gap: 2rem;
     justify-content: flex-start;
     padding-top: 2rem;
+    background: linear-gradient(rgb(55, 65, 81), rgb(17, 24, 39));
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: flex-start;
+    padding-top: 2rem;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
 }
 
 .intro-container {

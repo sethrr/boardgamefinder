@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "../app/styles/card.css";
-import "../app/styles/index.css";
 import GameFinder from "../app/components/GameFinder";
 import { Link } from "react-router-dom";
 function Quiz() {
@@ -16,7 +15,7 @@ function Quiz() {
         <img src="/GameFinderLogo.png" alt="EavBoardGameFinder"></img>
       </div>
       {!activeFinder ? (
-        <div className="finder-container">
+        <div className="game-settings">
           <div className="question-slide">
             <div className="intro-container">
               <h1> Looking for a game? We can help.</h1>
