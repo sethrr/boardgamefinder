@@ -84,11 +84,12 @@ function GameFinder() {
       id: 1,
       text: "How many players in your group?",
       options: [
-        { display: "2 players", value: "2" },
-        { display: "3 players", value: "3" },
-        { display: "4 players", value: "4" },
-        { display: "5 players", value: "5" },
-        { display: "6+ players", value: "6" }
+        { display: "<span>🧍‍♂️🧍‍♂️</span> 2 players", value: "2" },
+        { display: "<span>🧍🧍➕</span> 2+ players", value: "2.5" },
+        { display: "<span>🧍‍♂️🧍‍♂️🧍‍♂️</span> 3+ players", value: "3" },
+        { display: "<span>🧍🧍🧍🧍</span> 4+ players", value: "4" },
+        { display: "<span>🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️</span> 5+ players", value: "5" },
+        { display: "<span>🧍🧍🧍🧍🧍🧍</span> 6+ players", value: "6" }
       ],
        type: 'single'
     },
@@ -111,7 +112,7 @@ function GameFinder() {
         { display: "Simple", value: "1.5" },
         { display: "Slightly complex", value: "2.25" },
         { display: "Medium complexity", value: "3" },
-        { display: "Complex af", value: "4.5" },
+        { display: "Complex", value: "4.5" },
         { display: "No preference, surprise me", value: "5" }
       ],
        type: 'single'
@@ -203,12 +204,12 @@ function GameFinder() {
         {!isSubmitted ? (
           <>
             <div className="question-slide">
-              <h2>{currentQuestion.text}</h2>
+              <h2 className="question-slide-title">{currentQuestion.text}</h2>
               <div className="options-container">
           {currentQuestion.options.map((option, index) => (
             <button
               key={index}
-              className={`option-button ${
+              className={`card ${
                 currentQuestion.type === 'single'
                   ? currentAnswer === option.value
                     ? 'selected'
@@ -223,8 +224,8 @@ function GameFinder() {
                 currentQuestion.type
               )}
             >
-              {option.display}
-       
+             <h2 className="card-title" dangerouslySetInnerHTML={{__html: option.display}}></h2>
+             
             </button>
           ))}
         </div>

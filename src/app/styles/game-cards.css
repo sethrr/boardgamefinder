@@ -1,0 +1,155 @@
+.games-library {
+    width: 100%;
+    margin: 0 auto;
+    padding: 5rem;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @media screen and (max-width: 767px) {
+        padding: 2rem;
+    }
+}
+
+.games-library-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.game-card {
+    background: white;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.game-card-header {
+    background: #2c3e50;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+}
+
+.game-card-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.year {
+    background: #d4a17b;
+    padding: 3px 8px;
+    color: black;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.game-card-body {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.info-section {
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.info-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.player-icons {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    color: #3498db;
+}
+
+.bgg-link {
+    display: block;
+    background: #d4a17b;
+    color: black;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.bgg-link:hover {
+    background: #2980b9;
+}
+
+.status-message {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+}
+
+.status-message.loading {
+    color: #fff;
+}
+
+.status-message.error {
+    color: #e74c3c;
+}
+
+.status-message.empty {
+    color: #fff;
+}
+
+/* Filters */
+.filters-container {
+display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  color: #d4a17b;
+  width: 100%;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 20%;
+}
+
+.filter-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #d4a17b;
+}
+
+.filter-group select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filter-group {
+    width: 100%;
+  }
+}

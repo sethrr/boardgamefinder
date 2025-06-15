@@ -103,3 +103,37 @@ h6 {
 .game-list-container {
     width: 100%;
 }
+
+.nav {
+  display: flex; 
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-logo {
+display: flex;
+}
+
+.nav-links {
+   display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-transform: uppercase;
+  border: 2px solid #d4a17b;
+  padding: 10px;
+  text-decoration: none;
+  background: #d4a17b;
+  color: #3e5076;
+  font-weight: bold;
+
+  &:hover {
+   background: #d4a17b; 
+   color: white;
+  }
+}
