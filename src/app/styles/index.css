@@ -24,116 +24,133 @@ h6 {
 }
 
 .main {
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: flex-start;
-    padding-top: 2rem;
-    background: linear-gradient(rgb(55, 65, 81), rgb(17, 24, 39));
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: flex-start;
-    padding-top: 2rem;
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
+  padding-top: 2rem;
+  background: linear-gradient(rgb(55, 65, 81), rgb(17, 24, 39));
+  min-height: 100vh;
 }
 
 .intro-container {
-    color: white;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    height: 100%;
+  color: white;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  height: 100%;
 
-    button {
-        color: black;
-        text-transform: uppercase;
-        max-width: 50%;
-        margin-top: 2rem;
-    }
+  button {
+    color: black;
+    text-transform: uppercase;
+    max-width: 50%;
+    margin-top: 2rem;
+  }
 }
 .textarea {
-    height: 100%;
-    width: 100%;
-    border-radius: 0.25rem;
-    background-color: transparent;
-    padding: 0.75rem;
-    color: rgb(255 255 255);
+  height: 100%;
+  width: 100%;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  padding: 0.75rem;
+  color: rgb(255 255 255);
 }
 .logo {
-    max-width: 250px;
+  max-width: 250px;
 }
 
 .textarea-container {
-    flex: 1; /* Takes remaining space */
-    display: flex;
-    margin-bottom: 10px;
-    width: 100%;
+  flex: 1; /* Takes remaining space */
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .textarea {
-    flex: 1;
-    min-height: 300px;
-    resize: none;
+  flex: 1;
+  min-height: 300px;
+  resize: none;
 }
 
 .game {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
 }
 .game-list {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 .game-list li + li {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
-.game-details * + *{
-    margin-top: 0.25rem;
+.game-details * + * {
+  margin-top: 0.25rem;
 }
 .game-recommendation-title {
-    text-align: center;
-    width: 100%;
-    margin: 0 auto;
-    color: lightgray;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  color: lightgray;
 }
 .game-list-container {
-    width: 100%;
+  width: 100%;
 }
 
 .nav {
-  display: flex; 
-  justify-content: center;
-  flex-direction: column;
+  display: flex;
   gap: 1rem;
-  align-items: center;
+  justify-content: space-between;
+
+    @media (max-width: 1012px) {
+   flex-direction: column;
+   align-items: center;
+  }
 }
 
 .nav-logo {
-display: flex;
+  display: flex;
 }
 
 .nav-links {
-   display: flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   align-items: center;
+  
+  @media (max-width: 1012px) {
+    justify-content: center;
+   gap: 1rem 1.5rem ;
+  }
 }
 
 .nav-links a {
-  text-transform: uppercase;
-  border: 2px solid #d4a17b;
-  padding: 10px;
   text-decoration: none;
-  background: #d4a17b;
-  color: #3e5076;
   font-weight: bold;
+}
+
+.nav-links-link {
+  text-transform: uppercase;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: #d4a17b;
+  display: block;
+  font-weight: bold;
+}
+
+.nav-links .nav-button {
+  padding: 15px;
+  border: 2px solid #d4a178;
+  background: transparent;
+  color: #d4a178;
 
   &:hover {
-   background: #d4a17b; 
-   color: white;
+    background: #d4a178;
+    color: black;
   }
+}
+
+.site-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 78rem;
+  padding-bottom: 2.5rem;
 }

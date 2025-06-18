@@ -7,7 +7,7 @@ function Library() {
   return (
     <main className="main">
       <Navigation />
-      <div className="game-settings">
+      <div className="site-container">
         <LibraryGame />
       </div>
     </main>
