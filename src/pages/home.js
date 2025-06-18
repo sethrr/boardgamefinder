@@ -2,11 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../src/app/styles/home.css";
 import Navigation from "../app/components/Navigation";
+import EventCallout from "../app/components/eventCallout";
 
 const Home = () => {
   return (
     <main className="main">
       <Navigation showLinks={false}/>
+      <EventCallout/>
 
       <div className="home-container">
         <div className="cards-container">

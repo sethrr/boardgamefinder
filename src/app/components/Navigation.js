@@ -18,7 +18,7 @@ const Navigation = ({ showLinks }) => {
           <div className="nav-links">
            
               <Link className="nav-links-link" to="/quiz" element={<Quiz />}>
-                Recommend A Game For Me
+                Game Recommender
               </Link>
            
               <Link className="nav-links-link" to="/library" element={<LibraryGame />}>
