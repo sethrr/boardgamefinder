@@ -209,7 +209,7 @@ function GameFinder() {
           {currentQuestion.options.map((option, index) => (
             <button
               key={index}
-              className={`card ${
+              className={`card game-card ${
                 currentQuestion.type === 'single'
                   ? currentAnswer === option.value
                     ? 'selected'

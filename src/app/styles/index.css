@@ -99,6 +99,7 @@ h6 {
   display: flex;
   gap: 1rem;
   justify-content: space-between;
+  padding: 0 1rem;
 
   @media (max-width: 1012px) {
     flex-direction: column;
@@ -178,4 +179,11 @@ h6 {
   max-width: 78rem;
   text-align: center;
   color: #fff;
+}
+.site-inner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  flex-wrap: wrap;
 }

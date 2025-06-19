@@ -37,6 +37,7 @@
   overflow: auto;
   justify-content: center;
   width: 100%;
+  margin-top: 24px;
 }
 
 .question-slide .card-title {
@@ -63,7 +64,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
-  margin: 20px 0;
+  margin: 30px 0;
   flex-grow: 1;
 }
 
