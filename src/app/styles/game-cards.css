@@ -18,6 +18,7 @@
     gap: 1.5rem;
     margin-top: 1rem;
     width: 100%;
+    padding: 0 1rem;
 }
 
 .game-card {
@@ -121,6 +122,7 @@ display: flex;
   margin-bottom: 1rem;
   color: #d4a17b;
   width: 100%;
+  padding: 0 1rem;
 }
 
 .filter-group {
