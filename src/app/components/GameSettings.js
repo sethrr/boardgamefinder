@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
+import {
+  batchUpdateVisibility,
+  fetchAllAirtableRecords,
+  isRecordVisible,
+  updateRecordVisibility
+} from "./fetchAirtable";
 import "../styles/game-settings.css";
-
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_DATABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-);
 
 export default function GameSettings() {
   const [games, setGames] = useState([]);
@@ -24,40 +23,14 @@ export default function GameSettings() {
       setLoading(true);
       setError(null);
 
-      // Load games from your JSON file
-      const gamesRes = await fetch("/games_db.json");
-
-      if (!gamesRes.ok) {
-        throw new Error("Failed to load games");
-      }
-
-      const gamesData = await gamesRes.json();
-
-      // Load visibility settings from Supabase
-      const { data: visibilityData, error: visibilityError } = await supabase
-        .from("game_visibility")
-        .select("*");
-
-      if (visibilityError) {
-        console.warn("Error loading visibility settings:", visibilityError);
-      }
-
-      setGames(gamesData);
-
-      // Convert visibility array to object for easier lookup
-      // Use game_id consistently (not id)
+      const records = await fetchAllAirtableRecords();
       const visibilityMap = {};
-      gamesData.forEach((game) => {
-        visibilityMap[game.game_id] = true; // default to visible
+
+      records.forEach((record) => {
+        visibilityMap[record.id] = isRecordVisible(record);
       });
 
-      // Override with saved settings from Supabase
-      if (visibilityData) {
-        visibilityData.forEach((item) => {
-          visibilityMap[item.game_id] = item.is_visible;
-        });
-      }
-
+      setGames(records);
       setVisibility(visibilityMap);
     } catch (err) {
       setError(err.message);
@@ -67,41 +40,28 @@ export default function GameSettings() {
     }
   };
 
-  const handleToggle = async (gameId) => {
-    const game = games.find((g) => g.game_id === gameId);
+  const handleToggle = async (recordId) => {
+    const game = games.find((g) => g.id === recordId);
     if (!game) return;
 
-    const newVisibility = !visibility[gameId];
+    const newVisibility = !visibility[recordId];
 
-    // Update only the specific game's visibility
     setVisibility((prev) => ({
       ...prev,
-      [gameId]: newVisibility
+      [recordId]: newVisibility
     }));
 
     try {
       setSaving(true);
-
-      const { error } = await supabase.from("game_visibility").upsert(
-        {
-          title: game.title,
-          game_id: gameId,
-          is_visible: newVisibility,
-          updated_at: new Date().toISOString()
-        },
-        {
-          onConflict: "game_id"
-        }
-      );
-
-      if (error) throw error;
+      await updateRecordVisibility(recordId, newVisibility);
     } catch (err) {
-      // Revert only the changed game on error
       setVisibility((prev) => ({
         ...prev,
-        [gameId]: !newVisibility
+        [recordId]: !newVisibility
       }));
-      setError(`Failed to update ${game.title}: ${err.message}`);
+      setError(
+        `Failed to update ${game.fields["Game Name"]}: ${err.message}`
+      );
     } finally {
       setSaving(false);
     }
@@ -116,78 +76,22 @@ export default function GameSettings() {
   };
 
   const handleSelectAll = async () => {
-    const updates = [];
-    const inserts = [];
+    const updates = games
+      .filter((game) => !visibility[game.id])
+      .map((game) => ({ recordId: game.id, isVisible: true }));
 
-    // Get current data from Supabase to determine what to update vs insert
-    const { data: existingData } = await supabase
-      .from("game_visibility")
-      .select("game_id")
-      .in(
-        "game_id",
-        games.map((g) => g.game_id)
-      ); // Use game_id
+    if (updates.length === 0) return;
 
-    const existingGameIds = new Set(
-      existingData?.map((item) => item.game_id) || []
-    );
-
-    games.forEach((game) => {
-      if (!visibility[game.game_id]) {
-        // Use game_id
-        const record = {
-          title: game.title || game.game_id, // Use game_id as fallback
-          game_id: game.game_id, // Use game_id
-          is_visible: true,
-          updated_at: new Date().toISOString()
-        };
-
-        if (existingGameIds.has(game.game_id)) {
-          // Use game_id
-          updates.push(record);
-        } else {
-          inserts.push(record);
-        }
-      }
-    });
-
-    if (updates.length === 0 && inserts.length === 0) return;
-
-    // Optimistic update
     const newVisibility = {};
     games.forEach((game) => {
-      newVisibility[game.game_id] = true; // Use game_id
+      newVisibility[game.id] = true;
     });
     setVisibility(newVisibility);
 
     try {
       setSaving(true);
-
-      // Perform updates
-      if (updates.length > 0) {
-        for (const update of updates) {
-          const { error } = await supabase
-            .from("game_visibility")
-            .update({
-              is_visible: update.is_visible,
-              updated_at: update.updated_at
-            })
-            .eq("game_id", update.game_id);
-
-          if (error) throw error;
-        }
-      }
-
-      // Perform inserts
-      if (inserts.length > 0) {
-        const { error } = await supabase
-          .from("game_visibility")
-          .insert(inserts);
-
-        if (error) throw error;
-      }
+      await batchUpdateVisibility(updates);
     } catch (err) {
-      // Revert on error
       loadData();
       setError(`Failed to show all games: ${err.message}`);
     } finally {
@@ -196,78 +100,22 @@ export default function GameSettings() {
   };
 
   const handleSelectNone = async () => {
-    const updates = [];
-    const inserts = [];
+    const updates = games
+      .filter((game) => visibility[game.id])
+      .map((game) => ({ recordId: game.id, isVisible: false }));
 
-    // Get current data from Supabase to determine what to update vs insert
-    const { data: existingData } = await supabase
-      .from("game_visibility")
-      .select("game_id")
-      .in(
-        "game_id",
-        games.map((g) => g.game_id)
-      ); // Use game_id
+    if (updates.length === 0) return;
 
-    const existingGameIds = new Set(
-      existingData?.map((item) => item.game_id) || []
-    );
-
-    games.forEach((game) => {
-      if (visibility[game.game_id]) {
-        // Use game_id
-        const record = {
-          title: game.title || game.game_id, // Use game_id as fallback
-          game_id: game.game_id, // Use game_id
-          is_visible: false,
-          updated_at: new Date().toISOString()
-        };
-
-        if (existingGameIds.has(game.game_id)) {
-          // Use game_id
-          updates.push(record);
-        } else {
-          inserts.push(record);
-        }
-      }
-    });
-
-    if (updates.length === 0 && inserts.length === 0) return;
-
-    // Optimistic update
     const newVisibility = {};
     games.forEach((game) => {
-      newVisibility[game.game_id] = false; // Use game_id
+      newVisibility[game.id] = false;
     });
     setVisibility(newVisibility);
 
     try {
       setSaving(true);
-
-      // Perform updates
-      if (updates.length > 0) {
-        for (const update of updates) {
-          const { error } = await supabase
-            .from("game_visibility")
-            .update({
-              is_visible: update.is_visible,
-              updated_at: update.updated_at
-            })
-            .eq("game_id", update.game_id);
-
-          if (error) throw error;
-        }
-      }
-
-      // Perform inserts
-      if (inserts.length > 0) {
-        const { error } = await supabase
-          .from("game_visibility")
-          .insert(inserts);
-
-        if (error) throw error;
-      }
+      await batchUpdateVisibility(updates);
     } catch (err) {
-      // Revert on error
       loadData();
       setError(`Failed to hide all games: ${err.message}`);
     } finally {
@@ -300,23 +148,29 @@ export default function GameSettings() {
   }
 
   return (
-     <div className="game-settings">
+    <div className="game-settings">
       <div className="game-settings__header">
-        <h1 className="game-settings__title">
-          Game Visibility Settings
-        </h1>
+        <h1 className="game-settings__title">Game Visibility Settings</h1>
         <p className="game-settings__description">
-          Control which games appear in recommendations. Changes are saved automatically.
+          Control which games appear in recommendations. Changes are saved
+          automatically to Airtable.
         </p>
       </div>
 
-      {/* Summary and bulk actions */}
       <div className="game-settings__summary">
         <div className="game-settings__summary-row">
           <div className="game-settings__stats">
-            <span className="game-settings__stats-number">{getVisibleCount()}</span> of{' '}
-            <span className="game-settings__stats-number">{getTotalCount()}</span> games visible
-            {saving && <span className="game-settings__saving-indicator">Saving...</span>}
+            <span className="game-settings__stats-number">
+              {getVisibleCount()}
+            </span>{" "}
+            of{" "}
+            <span className="game-settings__stats-number">
+              {getTotalCount()}
+            </span>{" "}
+            games visible
+            {saving && (
+              <span className="game-settings__saving-indicator">Saving...</span>
+            )}
           </div>
           <div className="game-settings__actions">
             <button
@@ -337,62 +191,59 @@ export default function GameSettings() {
         </div>
       </div>
 
-      {/* Games list */}
       <div className="game-settings__games-list">
         {games.map((game) => (
           <div
-            key={game.game_id}
+            key={game.id}
             className={`game-settings__game-card ${
-              visibility[game.game_id] 
-                ? 'game-settings__game-card--visible' 
-                : 'game-settings__game-card--hidden'
-            } ${saving ? 'game-settings__game-card--disabled' : ''}`}
-            onClick={() => !saving && handleToggle(game.game_id)}
+              visibility[game.id]
+                ? "game-settings__game-card--visible"
+                : "game-settings__game-card--hidden"
+            } ${saving ? "game-settings__game-card--disabled" : ""}`}
+            onClick={() => !saving && handleToggle(game.id)}
           >
             <div className="game-settings__game-title">
-              {game.title}
+              {game.fields["Game Name"]}
             </div>
-            {game.description && (
-              <div className="game-settings__game-description">
-                {game.description}
-              </div>
-            )}
-            {(game.players || game.playtime || game.category) && (
+            {(game.fields["Player Count"] ||
+              game.fields["Avg Play Time"] ||
+              game.fields["Weight / Complexity"]) && (
               <div className="game-settings__game-meta">
-                {game.players && (
+                {game.fields["Player Count"] && (
                   <div className="game-settings__game-meta-item">
                     <span>👥</span>
-                    <span>{game.players}</span>
+                    <span>{game.fields["Player Count"]}</span>
                   </div>
                 )}
-                {game.playtime && (
+                {game.fields["Avg Play Time"] && (
                   <div className="game-settings__game-meta-item">
                     <span>⏰</span>
-                    <span>{game.playtime}</span>
+                    <span>{game.fields["Avg Play Time"]}</span>
                   </div>
                 )}
-                {game.category && (
+                {game.fields["Weight / Complexity"] && (
                   <div className="game-settings__game-meta-item">
                     <span>🎲</span>
-                    <span>{game.category}</span>
+                    <span>{game.fields["Weight / Complexity"]}</span>
                   </div>
                 )}
               </div>
             )}
-            
-            {/* Visual indicator */}
-            <div className={`game-settings__visibility-indicator ${
-              visibility[game.game_id] 
-                ? 'game-settings__visibility-indicator--visible' 
-                : 'game-settings__visibility-indicator--hidden'
-            }`} />
+
+            <div
+              className={`game-settings__visibility-indicator ${
+                visibility[game.id]
+                  ? "game-settings__visibility-indicator--visible"
+                  : "game-settings__visibility-indicator--hidden"
+              }`}
+            />
           </div>
         ))}
       </div>
 
       {games.length === 0 && (
         <div className="game-settings__empty-state">
-          No games found. Make sure your games.json file is accessible.
+          No games found. Check your Airtable configuration.
         </div>
       )}
     </div>

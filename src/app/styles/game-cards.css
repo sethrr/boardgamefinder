@@ -40,6 +40,7 @@
     justify-content: space-between;
     align-items: center;
     gap: .5rem;
+    min-height: 69px;
 }
 
 .game-card-header h2 {

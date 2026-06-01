@@ -1,21 +1,18 @@
-import { useState, useEffect } from "react";
 import "../app/styles/card.css";
-import LibraryGame from "../app/components/LibraryGame";
 import Navigation from "../app/components/Navigation";
 import EventCallout from "../app/components/eventCallout";
+import InstagramEmbed from "../app/components/instagramFeed";
 
-function Library() {
+function About() {
   return (
     <main className="main">
       <Navigation />
       <EventCallout />
       <div className="site-container">
-        <div className="site-container-inner">
-          <LibraryGame />
-        </div>
+        <InstagramEmbed />
       </div>
     </main>
   );
 }
 
-export default Library;
+export default About;

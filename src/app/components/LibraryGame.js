@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { fetchAllAirtableRecords } from "./fetchAirtable";
 import "../styles/game-cards.css";
 
 const LibraryGame = () => {
@@ -15,22 +16,9 @@ const LibraryGame = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch(
-          `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_AIRTABLE_TABLE}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
-            }
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setGames(data.records || []);
-        setFilteredGames(data.records || []);
+        const records = await fetchAllAirtableRecords();
+        setGames(records);
+        setFilteredGames(records);
       } catch (error) {
         setErrorMessage(
           error instanceof Error ? error.message : "Unknown error occurred"
@@ -156,6 +144,9 @@ const LibraryGame = () => {
 
                 <div className="info-section">
                   <div>Players: {game.fields["Player Count"] || "Not specified"}</div>
+                </div>
+
+                 <div className="info-section">
                   <div>Best with {game.fields["Recommended Players"] || "Not specified"}</div>
                 </div>
 
@@ -165,10 +156,6 @@ const LibraryGame = () => {
 
                 <div className="info-section">
                   <div>Complexity: {game.fields["Weight / Complexity"]} ({game.fields["Weight"]})</div>
-                </div>
-
-                <div className="info-section">
-                  <div>Owned by: {game.fields["Owned By"]}</div>
                 </div>
               </div>
 

@@ -66,8 +66,10 @@ a.card-link:hover {
 .card-links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
+
 .card-links a {
   color: #3e5076;
   text-decoration: underline;
@@ -92,6 +94,28 @@ a.card-link:hover {
   height: 100%;
   fill: currentColor;
 }
+
+.social-icon {
+  width: 2rem;
+  color: #3e5076;
+}
+
+.social-links a {
+  color: #3e5076;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  
+  &:hover {
+      color: #d4a17b;
+
+      svg {
+          color: #d4a17b;
+      }
+  }
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

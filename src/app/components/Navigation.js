@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import LibraryGame from "../components/LibraryGame";
 import Quiz from "../../pages/quiz";
+import About from "../../pages/about";
 
 const Navigation = ({ showLinks }) => {
   const location = useLocation();
@@ -11,12 +12,15 @@ const Navigation = ({ showLinks }) => {
       <div className="nav">
         <div className="nav-logo">
           <Link to="/" className="logo">
-            <img src="/GameFinderLogo.png" alt="EavBoardGameFinder"></img>
+            <img src="/MainLogo.png" alt="EavBoardGameFinder"></img>
           </Link>
         </div>
      
           <div className="nav-links">
            
+        {/*    <Link className="nav-links-link" to="/" element={<About />}>
+               About
+              </Link> */}
               <Link className="nav-links-link" to="/quiz" element={<Quiz />}>
                 Game Recommender
               </Link>

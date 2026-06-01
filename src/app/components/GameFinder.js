@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/card.css";
 import GameFetcher from "./GameFetcher";
+import { fetchVisibleQuizGames } from "./fetchAirtable";
 
 function GameFinder() {
   const [loading, setLoading] = useState(false);
@@ -13,23 +14,13 @@ function GameFinder() {
   }, []);
 
   const getVisibleGames = async () => {
-  try {
-    const response = await fetch('/api/visible-games')
-    const data = await response.json()
-    
-    if (response.ok) {
-       setGames(data.games);
-       console.log('Games loaded:', data.games);
-      return; 
-    } else {
-      console.error('API Error:', data.error)
-      return []
+    try {
+      const visibleGames = await fetchVisibleQuizGames();
+      setGames(visibleGames);
+    } catch (error) {
+      console.error("Error loading games from Airtable:", error);
     }
-  } catch (error) {
-    console.error('Network error:', error)
-    return []
-  }
-}
+  };
   // Function to request recommendations from OpenAI API
   const getRecommendations = async () => {
    if (games.length === 0) return;
